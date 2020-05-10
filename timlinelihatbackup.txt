@@ -1,0 +1,82 @@
+<?php require_once("auth.php"); ?>
+<?php
+include "koneksi.php";
+$query = mysqli_query($koneksi, "select * from tb_23");
+$jml = mysqli_num_rows($query);
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+
+
+                            <!-- BAGIAN SIDEBAR -->
+        <?php
+          include('template/sidebar.php');
+        ?>
+                            <!-- BAGIAN SIDEBAR -->
+
+
+
+                                <!-- CONTENT -->
+                                <div class="container">
+   <br />
+   <div class="form-group">
+    <div class="input-group">
+    </div>
+    <h1>Lihat data</h1>
+   </div>
+   <br />
+   <div id="result"></div>
+  </div>
+ </body>
+</html>
+
+
+<script>
+$(document).ready(function(){
+
+ load_data();
+
+ function load_data(query)
+ {
+  $.ajax({
+   url:"fetch.php",
+   method:"POST",
+   data:{query:query},
+   success:function(data)
+   {
+    $('#result').html(data);
+   }
+  });
+ }
+ $('#search_text').keyup(function(){
+  var search = $(this).val();
+  if(search != '')
+  {
+   load_data(search);
+  }
+  else
+  {
+   load_data();
+  }
+ });
+});
+</script>
+                                <!-- CONTENT -->
+
+
+
+
+                            <!-- BAGIAN FOOTER -->                               
+             <?php
+              include('template/kakineh.php');
+            ?>
+                            <!-- BAGIAN FOOTER -->
+
+
+
+</body>
+</html>
